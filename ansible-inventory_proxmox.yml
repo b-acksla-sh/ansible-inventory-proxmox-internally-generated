@@ -1,0 +1,18 @@
+- name: Assemble proxmox_nodes Inventory Group
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Gather online proxmox nodes
+      register: online_members
+      ansible.builtin.shell: "ssh root@{{ lookup('ansible.builtin.env', 'PVE') }} cat /etc/pve/.members | jq -r '.nodelist[] | select(.online == 1) | .ip'"
+      changed_when: false
+
+    - name: Populate proxmox_hosts group
+      when: online_members.stdout | length > 0
+      ansible.builtin.add_host:
+        name: "{{ item }}"
+        groups: proxmox_nodes
+      loop: "{{ online_members.stdout_lines }}"
+      changed_when: false
