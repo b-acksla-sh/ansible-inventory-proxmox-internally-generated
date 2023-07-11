@@ -10,7 +10,7 @@ Ideally, you should have key-based password-less SSH login set up. Even more ide
 
 PVE is an environment variable pointing to the IP address or hostname of that low-power node. It should be defined in the .zshrc or .bashrc of the terminal where ansible is installed:
 
-		export PVE=192.168.254.1
+    export PVE=192.168.254.1
 
 jq should be installed/present on that proxmox node.
 
