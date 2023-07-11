@@ -9,7 +9,7 @@
       ansible.builtin.shell: "ssh root@{{ lookup('ansible.builtin.env', 'PVE') }} cat /etc/pve/.members | jq -r '.nodelist[] | select(.online == 1) | .ip'"
       changed_when: false
 
-    - name: Populate proxmox_hosts group
+    - name: Populate proxmox_nodes group
       when: online_members.stdout | length > 0
       ansible.builtin.add_host:
         name: "{{ item }}"
