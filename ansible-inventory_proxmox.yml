@@ -13,6 +13,6 @@
       when: online_members.stdout | length > 0
       ansible.builtin.add_host:
         name: "{{ item }}"
-        groups: proxmox_nodes
+        group: proxmox_nodes
       loop: "{{ online_members.stdout_lines }}"
       changed_when: false
